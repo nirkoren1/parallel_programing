@@ -1,42 +1,54 @@
 .intel_syntax noprefix
 
 .section .text
-    .global strcmps
     .global hamming_dist
 hamming_dist:
+    xorps xmm3, xmm3
+    xorps xmm4, xmm4
+    xorps xmm0, xmm0
+    mov rax, 0
     .compare_loop:
         # Load 16 bytes from each string
-        movdqu xmm0, [rsi]
-        movdqu xmm1, [rdi]
+        movdqu xmm1, [rsi]
+        movdqu xmm2, [rdi]
 
-        # Compare strings using PCMPESTRI
-        pcmpestri xmm0, xmm1, 0b00011000
+        paddb xmm4, xmm0
 
-        # Get the result
-        mov eax, ecx
-        setz al
-
-        # Check if strings are equal
-        test eax, eax
-        jz .equal
-
-        # Get the first mismatching characters
-        movzbq rax, byte [rsi + rcx]
-        movzbq rdx, byte [rdi + rcx]
-
-        # Calculate the difference
-        sub eax, edx
-        jmp .done
-
-    .equal:
-        cmp al, 1
-        # Move to the next 16 bytes
         add rsi, 16
         add rdi, 16
 
-        # Loop back for further comparison
+        add rax, 1
+
+        # Compare strings using PCMPESTRM
+        pcmpistrm xmm1, xmm2, 0b01001000  
+
+        jnz .compare_loop
+        js .sum_result
         jmp .compare_loop
 
-    .done:
+
+    .sum_result:
+        paddb xmm4, xmm0
+
+        movq rdi, rax
+
+        pmovsxbw xmm1, xmm4
+        psrldq xmm4, 8
+        pmovsxbw xmm2, xmm4
+        phaddw xmm1, xmm2
+
+        pxor xmm0, xmm0
+        phaddw xmm1, xmm0
+        phaddw xmm1, xmm0
+        phaddw xmm1, xmm0
+
+
+        pextrw r8d, xmm1, 0 
+        movsx r8, r8w
+        imul rax, 16
+        addq rax, r8
+        
+
+    .end:
         # Return the result
         ret
