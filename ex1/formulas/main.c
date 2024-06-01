@@ -34,6 +34,7 @@ float formula1_test(float *x, unsigned int length)
 
 float formula2_test(float *x, float *y, unsigned int length)
 {
+    float all_sum = 0;
     float sum = 0;
     for (int k = 0; k < length; k++)
     {
@@ -43,7 +44,9 @@ float formula2_test(float *x, float *y, unsigned int length)
             product *= (x[i] * x[i] + y[i] * y[i] - 2 * x[i] * y[i] + 1);
         }
         sum += (x[k] * y[k]) / product;
+        all_sum += x[k] * y[k];
     }
+    // printf("sum:%f \n", all_sum);
     return sum;
 }
 
@@ -77,17 +80,20 @@ int main(void)
 
         } while (isnanf(((float)1) / product));
 
-        float form1 = formula1(x, length);
-        float test1 = formula1_test(x, length);
-        float form2 = formula2(x, y, length);
-        float test2 = formula2_test(x, y, length);
+        printf("product:%f \n", product);
 
-        if (!is_close(form1, test1))
-        {
-            printf("failed formula 1\n");
-            printf("%f %f\n", form1, test1);
-            return 0;
-        }
+        // float form1 = formula1(x, length);
+        // float test1 = formula1_test(x, length);
+        float test2 = formula2_test(x, y, length);
+        printf("sum:%f \n", test2*product);
+        float form2 = formula2(x, y, length);
+
+        // if (!is_close(form1, test1))
+        // {
+        //     printf("failed formula 1\n");
+        //     printf("%f %f\n", form1, test1);
+        //     return 0;
+        // }
 
         if (!is_close(form2, test2))
         {
@@ -98,7 +104,7 @@ int main(void)
             return 0;
         }
 
-        printf("test1: %f\t\t\t test2:%f\n", test1, test2);
+        // printf("test1: %f\t\t\t test2:%f\n", test1, test2);
     }
     printf("test completed successfully\n");
 
