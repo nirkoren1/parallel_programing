@@ -1,5 +1,5 @@
+// 316443902 Nir Koren
 #include <immintrin.h>
-// #include <stdio.h>
 #include <math.h>
 
 float formula1(float *x, unsigned int length){

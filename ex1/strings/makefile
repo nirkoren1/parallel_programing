@@ -1,11 +1,11 @@
-# gcc main.c formula2.s formula1.c -no-pie -lm -g -msse3
+# gcc main.c hamming.s b64.c -no-pie -lm -g -msse4.2
 
 # Makefile
 
 # Variables
 CC=gcc
-CFLAGS=-no-pie -lm -g -msse3
-SOURCES=main.c formula1.c formula2.s
+CFLAGS=-no-pie -lm -g -msse4.2
+SOURCES=main.c b64.c hamming.s
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=program
 
@@ -30,5 +30,3 @@ run:
 
 # PHONY
 .PHONY: all clean
-
-
