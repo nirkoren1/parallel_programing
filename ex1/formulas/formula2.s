@@ -1,6 +1,7 @@
 .intel_syntax noprefix
 
 .section .data
+    .align 16
     ones: .float 1.0, 1.0, 1.0, 1.0
     zeros: .float 0.0, 0.0, 0.0, 0.0
 
