@@ -5,6 +5,6 @@
 
 #include "graph.h"
 
-void PageRank_P(Graph *g, int n, float* ranks);
+void PageRank(Graph *g, int n, float* ranks);
 
 #endif

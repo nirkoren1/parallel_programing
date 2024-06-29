@@ -71,19 +71,14 @@ void partialMatMul(void* arg) {
         double sum = 0.0;
         for (int j = 0; j < data->N; ++j) {
             sum += data->ranks->at(j) * data->matrix->at(i)[j];
-            // data->result->at(i) += data->ranks->at(j) * data->matrix->at(i)[j];
         }
         data->result->at(i) = data->alpha + data->beta*sum;
-
     }
-    
-    // return NULL;
 }
 
 std::vector<float> matmul_r(const std::vector<float>& ranks, const std::vector<std::vector<float>> matrix, int N, threadpool tpool, float alpha, float beta) {
     std::vector<float> result(N, 0);
     int numThreads = Threads_N;
-    // std::vector<pthread_t> threads(numThreads);
     std::vector<ThreadData> threadData(numThreads);
 
     int chunkSize = N / numThreads;
@@ -98,27 +93,15 @@ std::vector<float> matmul_r(const std::vector<float>& ranks, const std::vector<s
         threadData[i].N = N;
 
         thpool_add_work(tpool, partialMatMul, (void*)&threadData[i]);
-        // pthread_create(&threads[i], NULL, partialMatMul, (void*)&threadData[i]);
     }
 
-    // for (int i = 0; i < numThreads; ++i) {
-    //     pthread_join(threads[i], NULL);
-    // }
-
     thpool_wait(tpool);
-
-    // std::cout << "result start:" << std::endl;
-    // for (int j = 0; j < N; ++j) {
-    //         std::cout << result[j] << " ";
-    //     }
-    // std::cout << std::endl;
-    // std::cout << "result end" << std::endl;
 
     return result;
 }
 
 
-void PageRank_P(Graph *g, int n, float* ranks) {
+void PageRank(Graph *g, int n, float* ranks) {
     int N = g->numVertices;
     float initialValue = 1.0 / N;
     float alpha = D/N;

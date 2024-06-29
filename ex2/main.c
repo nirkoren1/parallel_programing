@@ -14,59 +14,59 @@ void initializeRanks(float *ranks, int N) {
 }
 
 
-void PageRank(Graph *graph, int iterations, float* ranks) {
-    int N = graph->numVertices;
-    float *newRanks = (float *)malloc(N * sizeof(float));
-    int* outlinkes = (int*)calloc(N, sizeof(int));
-    initializeRanks(ranks, N);
+// void PageRank(Graph *graph, int iterations, float* ranks) {
+//     int N = graph->numVertices;
+//     float *newRanks = (float *)malloc(N * sizeof(float));
+//     int* outlinkes = (int*)calloc(N, sizeof(int));
+//     initializeRanks(ranks, N);
     
-    //outlinks calculations
+//     //outlinks calculations
     
-    for(int i = 0; i < N; i++) {
-        node* v = graph->adjacencyLists[i];
-        while (v!=NULL) {
-            outlinkes[i]++;
-            v = v->next;
-        }
-    }
+//     for(int i = 0; i < N; i++) {
+//         node* v = graph->adjacencyLists[i];
+//         while (v!=NULL) {
+//             outlinkes[i]++;
+//             v = v->next;
+//         }
+//     }
     
-    for (int iter = 0; iter < iterations; iter++) {
-        //calculate nodes with outlinks to i
-        for (int i = 0; i < N; i++) {
-            vertex* out2i = (vertex*)malloc(N * sizeof(vertex));
+//     for (int iter = 0; iter < iterations; iter++) {
+//         //calculate nodes with outlinks to i
+//         for (int i = 0; i < N; i++) {
+//             vertex* out2i = (vertex*)malloc(N * sizeof(vertex));
             
-            for(int j = 0; j < N; j++) {
-                if( j == i) continue;
-                node* v = graph->adjacencyLists[j];
-                while (v != NULL) {
-                    if (v->v == i) {
-                        out2i[j] = 1;
-                        break;
-                    }
-                    v = v->next;
-                }
-            }
+//             for(int j = 0; j < N; j++) {
+//                 if( j == i) continue;
+//                 node* v = graph->adjacencyLists[j];
+//                 while (v != NULL) {
+//                     if (v->v == i) {
+//                         out2i[j] = 1;
+//                         break;
+//                     }
+//                     v = v->next;
+//                 }
+//             }
             
-            //calculate i rank
-            double sumA = 0.0;
-            double sumB = 0.0;
-            for(int j = 0 ; j < N; j++) {
-                if(out2i[j] == 1) {
-                    sumA += ranks[j]/outlinkes[j];
-                } else if(outlinkes[j] == 0) {
-                    sumB += ranks[j]/N;
-                }
-            }
-            newRanks[i] = D/N +(1-D)*(sumA+sumB);
-        }
+//             //calculate i rank
+//             double sumA = 0.0;
+//             double sumB = 0.0;
+//             for(int j = 0 ; j < N; j++) {
+//                 if(out2i[j] == 1) {
+//                     sumA += ranks[j]/outlinkes[j];
+//                 } else if(outlinkes[j] == 0) {
+//                     sumB += ranks[j]/N;
+//                 }
+//             }
+//             newRanks[i] = D/N +(1-D)*(sumA+sumB);
+//         }
 
-        for (int i = 0; i < N; i++) {
-            ranks[i] = newRanks[i];
-        }
-    }
+//         for (int i = 0; i < N; i++) {
+//             ranks[i] = newRanks[i];
+//         }
+//     }
 
-    free(newRanks);
-}
+//     free(newRanks);
+// }
 
 int main(void) {
     int N = 500; // number of nodes
@@ -119,7 +119,7 @@ int main(void) {
     // }
 
     start = clock();
-    PageRank_P(graph, iterations, ranks);
+    PageRank(graph, iterations, ranks);
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 
