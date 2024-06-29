@@ -1,4 +1,4 @@
-# gcc main.c hamming.s b64.c -no-pie -lm -g -msse4.2
+# 316443902 Nir Koren
 
 # Makefile
 
@@ -21,9 +21,6 @@ $(EXECUTABLE): $(OBJECTS)
 %.o: %.s
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-# Clean
-clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
 
 run:
 	./$(EXECUTABLE)
