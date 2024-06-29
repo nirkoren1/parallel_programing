@@ -1,3 +1,7 @@
+// 316443902 Nir Koren
+// this code was provided in the Tirgul 5, as said in the instructions: "it is recommended to use a Thread pool for this code"
+// and "you may use the implementation showed in the sessions or a one of your own."
+
 /* ********************************
  * Author:       Johan Hanssen Seferidis
  * License:         MIT
