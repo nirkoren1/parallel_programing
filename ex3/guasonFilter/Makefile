@@ -8,16 +8,16 @@ CFLAGS=-Wall -fopenmp
 LDFLAGS=-lm
 
 # Source files
-SRC=main.c gaussianFilter.c gaussianFilterParallel.c
+SRC=main.c guassonFilter.c guassonFilterParallel.c
 
 # Header files
-HEADERS=gaussianFilter.h gaussianFilterParallel.h stb_image_write.h stb_image.h
+HEADERS=guassonFilter.h guassonFilterParallel.h stb_image_write.h stb_image.h
 
 # Object files
 OBJS=$(SRC:.c=.o)
 
 # Output executable
-TARGET=gaussian_filter
+TARGET=guasson_filter
 
 # Default target
 all: $(TARGET)
